@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import withSearch from '../hooks/withSearch'
 
-const UsingEffect = () => {
+const UsingEffect = ({ search }) => {
 
     const [users, setUsers] = useState(null)
 
@@ -23,7 +24,9 @@ const UsingEffect = () => {
 
                 {
                     !!users ?
-                        users.map((user) => {
+                        users
+                        .filter((user) => user?.name?.toLowerCase().includes(search?.toLowerCase()))
+                        .map((user) => {
                             return <li key={user.id}>{user.name}</li>
                         })
                         : (
@@ -35,4 +38,4 @@ const UsingEffect = () => {
     )
 }
 
-export default UsingEffect
+export default withSearch(UsingEffect)
